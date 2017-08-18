@@ -1,4 +1,13 @@
 <?php
+/**
+ * This are the settings for backend admin page. This includes a settings
+ * tab and help tab. This page will show under the setttings menus 
+ * unless the wp-swift-admin-menu plugin is activated where it will show
+ * show under that menu instead.
+ * 
+ * @author 	 Gary Swift 
+ * @since    1.0.0
+ */
 add_action( 'admin_menu', 'wp_swift_team_member_cpt_add_admin_menu' );
 add_action( 'admin_init', 'wp_swift_team_member_cpt_settings_init' );
 
@@ -30,9 +39,9 @@ function wp_swift_team_member_cpt_settings_init(  ) {
 	);
 
 	add_settings_field( 
-		'wp_swift_team_member_cpt_checkbox_load_css', 
-		__( 'Load Public CSS', 'wp-swift-team-member-cpt' ), 
-		'wp_swift_team_member_cpt_checkbox_load_css_render', 
+		'wp_swift_team_member_cpt_checkbox_load_assets', 
+		__( 'Load Public Assets', 'wp-swift-team-member-cpt' ), 
+		'wp_swift_team_member_cpt_checkbox_load_assets_render', 
 		'team_member_settings_page', 
 		'wp_swift_team_member_cpt_settings_page_section' 
 	);
@@ -142,7 +151,7 @@ function wp_swift_team_member_cpt_select_field_show_method_render(  ) {
 <?php
 
 }
-function wp_swift_team_member_cpt_checkbox_load_css_render(  ) { 
+function wp_swift_team_member_cpt_checkbox_load_assets_render(  ) { 
 
 	$options = get_option( 'wp_swift_team_member_cpt_settings' );
 	?>
@@ -150,7 +159,15 @@ function wp_swift_team_member_cpt_checkbox_load_css_render(  ) {
 		if (isset($options['wp_swift_team_member_cpt_checkbox_load_css'])) {
 			checked( $options['wp_swift_team_member_cpt_checkbox_load_css'], 1 ); 
 		}
-		?>><small>Use the plugin to load a CSS file.</small>
+		?>><label for="wp_swift_team_member_cpt_settings[wp_swift_team_member_cpt_checkbox_load_css]">Load CSS</label>
+	<br>
+	<input type="checkbox" value="1" name='wp_swift_team_member_cpt_settings[wp_swift_team_member_cpt_checkbox_load_javascript]' <?php 
+		if (isset($options['wp_swift_team_member_cpt_checkbox_load_javascript'])) {
+			checked( $options['wp_swift_team_member_cpt_checkbox_load_javascript'], 1 ); 
+		}
+		?>><label for="name='wp_swift_team_member_cpt_settings[wp_swift_team_member_cpt_checkbox_load_javascript]'">Load JavaScript</label>
+		<br>
+		<small>Use the plugin to load CSS &amp; JavaScript files into the public facing page.</small>
 	<?php
 }
 function wp_swift_team_member_cpt_checkbox_supports_render( ) { 
@@ -210,9 +227,10 @@ function wp_swift_team_member_cpt_checkbox_acf_fields_render( ) {
 			checked( $options['wp_swift_team_member_cpt_checkbox_acf_field_featued_profile'], 1 ); 
 		}
 		?>><label for="wp_swift_team_member_cpt_settings[wp_swift_team_member_cpt_checkbox_acf_field_featued_profile]">Featued Profile</label>		
-	<div><small>Additional custom fields</small></div>
+	<div><small>Additional custom fields.</small></div>
 	<?php		
 }
+
 function wp_swift_team_member_cpt_checkbox_visibility_render( ) {
 
 	$options = get_option( 'wp_swift_team_member_cpt_settings' );
@@ -221,24 +239,23 @@ function wp_swift_team_member_cpt_checkbox_visibility_render( ) {
 		if (isset($options['wp_swift_team_member_cpt_checkbox_visibility'])) {
 			checked( $options['wp_swift_team_member_cpt_checkbox_visibility'], 1 ); 
 		}
-	?>><label for="wp_swift_team_member_cpt_settings[wp_swift_team_member_cpt_checkbox_visibility]">Public</label><?php
+	?>><label for="wp_swift_team_member_cpt_settings[wp_swift_team_member_cpt_checkbox_visibility]">Public</label>
+	<br><small>Public CPTs will have their own public facing pages and may be parsed by web crawlers.</small><?php
 }
+
 function wp_swift_team_member_cpt_help_shortcode_render( ) { 
 ?>
 <pre class="prettyprint custom">
 // WordPress shortcode
-
 [team]
 </pre>
 <?php
 }
 
-
 function wp_swift_team_member_cpt_help_php_function_render(  ) { 
 ?>
 <pre class="prettyprint lang-php custom">
 // Render the team
-
 if (function_exists('wp_swift_team_members_func')) {
   echo wp_swift_team_members_func();
 }
@@ -259,9 +276,11 @@ function wp_swift_team_member_cpt_settings_section_callback(  ) {
 	echo __( 'WordPress custom post type for team members.', 'wp-swift-team-member-cpt' );
 
 }
+
 function wp_swift_team_member_cpt_help_section_callback(  ) { 
 	?><p>To render the <b>Team Members</b> onto a webpage there are two options: PHP code and WordPress <a href="https://codex.wordpress.org/Shortcode" target="_blank">Shortcodes</a>.</p><?php
 }
+
 function wp_swift_team_member_cpt_options_page(  ) { 
 ?><div id="wp-swift-team-member-cpt-options-page" class="wrap">
 

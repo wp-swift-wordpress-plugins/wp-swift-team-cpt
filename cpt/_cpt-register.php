@@ -1,9 +1,8 @@
 <?php
- function cptui_register_my_cpts_team_member() {
-
-	/**
-	 * Post Type: Team.
-	 */
+/**
+ * Register Post Type: Team.
+ */
+function cptui_register_my_cpts_team_member() {
 
 	$labels = array(
 		"name" => __( "Team", "" ),
@@ -59,6 +58,5 @@
 
 	register_post_type( "team_member", $args );
 }
-
 add_action( 'init', 'cptui_register_my_cpts_team_member' );
 

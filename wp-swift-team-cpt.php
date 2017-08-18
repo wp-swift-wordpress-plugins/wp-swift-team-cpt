@@ -69,15 +69,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wp-swift-team-cpt.php';
  * @author 	 Gary Swift 
  * @since    1.0.0
  */
-require plugin_dir_path( __FILE__ ) . 'cpt/_cpt-team-member.php';
-
-/**
- * The Advanced Custom Fields field group.
- *
- * @author 	 Gary Swift 
- * @since    1.0.0
- */
-require plugin_dir_path( __FILE__ ) . 'acf-field-groups/_acf-field-group_team-member-additonal-fields.php';
+require plugin_dir_path( __FILE__ ) . 'cpt/_cpt-register.php';
 
 /**
  * The posts screen columns.
@@ -85,7 +77,7 @@ require plugin_dir_path( __FILE__ ) . 'acf-field-groups/_acf-field-group_team-me
  * @author 	 Gary Swift 
  * @since    1.0.0
  */
-require plugin_dir_path( __FILE__ ) . 'functions/_posts-screen-columns-team-member.php';
+require plugin_dir_path( __FILE__ ) . 'cpt/_cpt-posts-screen-columns.php';
 
 /**
  * The title placeholder.
@@ -93,7 +85,15 @@ require plugin_dir_path( __FILE__ ) . 'functions/_posts-screen-columns-team-memb
  * @author 	 Gary Swift 
  * @since    1.0.0
  */
-require plugin_dir_path( __FILE__ ) . 'functions/_team-member-title-placeholder.php';
+require plugin_dir_path( __FILE__ ) . 'cpt/_cpt-title-placeholder.php';
+
+/**
+ * The Advanced Custom Fields field group.
+ *
+ * @author 	 Gary Swift 
+ * @since    1.0.0
+ */
+require plugin_dir_path( __FILE__ ) . 'acf-field-groups/_acf-field-group.php';
 
 /**
  * The Admin menu settings.
@@ -107,6 +107,7 @@ function wp_swift_team_member_cpt_admin_menu() {
 	}
 }
 add_action( 'init', 'wp_swift_team_member_cpt_admin_menu' );
+
 /**
  * Begins execution of the plugin.
  *

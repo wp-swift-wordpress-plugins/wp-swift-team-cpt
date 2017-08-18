@@ -62,7 +62,6 @@ class Wp_Swift_Team_Cpt_Public {
 	    // ), $atts );
 	    // return "foo = {$a['foo']}";
 
-        // wp_reset_query();
         $options = get_option( 'wp_swift_team_member_cpt_settings' );
         $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
         $args = array( 
@@ -103,9 +102,10 @@ class Wp_Swift_Team_Cpt_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wp-swift-team-cpt-public.css', array(), $this->version, 'all' );
-
+		$options = get_option( 'wp_swift_team_member_cpt_settings' );
+		if (isset($options['wp_swift_team_member_cpt_checkbox_load_css'])) {
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wp-swift-team-cpt-public.css', array(), $this->version, 'all' );
+		}
 	}
 
 	/**
@@ -126,9 +126,10 @@ class Wp_Swift_Team_Cpt_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-swift-team-cpt-public.js', array( 'jquery' ), $this->version, false );
-
+		$options = get_option( 'wp_swift_team_member_cpt_settings' );
+		if (isset($options['wp_swift_team_member_cpt_checkbox_load_javascript'])) {
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-swift-team-cpt-public.js', array( 'jquery' ), $this->version, false );
+		}
 	}
 
 }
