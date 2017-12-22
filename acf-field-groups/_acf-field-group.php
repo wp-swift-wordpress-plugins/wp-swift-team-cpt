@@ -98,6 +98,25 @@ $team_member_skype = array (
 	'readonly' => 0,
 	'disabled' => 0,
 );
+$team_member_linkedin = array (
+	'key' => 'field_5a3be084adae6',
+	'label' => 'Linkedin',
+	'name' => 'linkedin',
+	'type' => 'text',
+	'instructions' => '',
+	'required' => 0,
+	'conditional_logic' => 0,
+	'wrapper' => array (
+		'width' => '',
+		'class' => '',
+		'id' => '',
+	),
+	'default_value' => '',
+	'placeholder' => '',
+	'prepend' => '',
+	'append' => '',
+	'maxlength' => '',
+);
 $team_member_featued_profile = array (
 	'key' => 'field_599599ffbbb7f',
 	'label' => 'Featued Profile',
@@ -131,6 +150,9 @@ if (isset($options['wp_swift_team_member_cpt_checkbox_acf_field_mobile'])) {
 }
 if (isset($options['wp_swift_team_member_cpt_checkbox_acf_field_skype'])) {
 	$team_member_fields[] = $team_member_skype;
+}
+if (isset($options['wp_swift_team_member_cpt_checkbox_acf_field_linkedin'])) {
+	$team_member_fields[] = $team_member_linkedin;
 }
 if (isset($options['wp_swift_team_member_cpt_checkbox_acf_field_featued_profile'])) {
 	$team_member_fields[] = $team_member_featued_profile;

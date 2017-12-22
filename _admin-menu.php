@@ -222,6 +222,12 @@ function wp_swift_team_member_cpt_checkbox_acf_fields_render( ) {
 		}
 		?>><label for="wp_swift_team_member_cpt_settings[wp_swift_team_member_cpt_checkbox_acf_field_skype]">Skype</label>
 	<br>
+	<input type="checkbox" value="1" name='wp_swift_team_member_cpt_settings[wp_swift_team_member_cpt_checkbox_acf_field_linkedin]' <?php 
+		if (isset($options['wp_swift_team_member_cpt_checkbox_acf_field_linkedin'])) {
+			checked( $options['wp_swift_team_member_cpt_checkbox_acf_field_linkedin'], 1 ); 
+		}
+		?>><label for="wp_swift_team_member_cpt_settings[wp_swift_team_member_cpt_checkbox_acf_field_linkedin]">LinkedIn</label>
+	<br>	
 	<input type="checkbox" value="1" name='wp_swift_team_member_cpt_settings[wp_swift_team_member_cpt_checkbox_acf_field_featued_profile]' <?php 
 		if (isset($options['wp_swift_team_member_cpt_checkbox_acf_field_featued_profile'])) {
 			checked( $options['wp_swift_team_member_cpt_checkbox_acf_field_featued_profile'], 1 ); 
