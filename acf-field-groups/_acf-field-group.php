@@ -21,6 +21,33 @@ $team_member_title = array (
 	'append' => '',
 	'maxlength' => '',
 );
+$department = array(
+	'key' => 'field_5a92a482206cb',
+	'label' => 'Department',
+	'name' => 'department',
+	'type' => 'select',
+	'instructions' => '',
+	'required' => 0,
+	'conditional_logic' => 0,
+	'wrapper' => array(
+		'width' => '',
+		'class' => '',
+		'id' => '',
+	),
+	'choices' => array(
+		'investment' => 'Investment',
+		'admin' => 'Admin',
+		'external' => 'External',
+	),
+	'default_value' => array(
+	),
+	'allow_null' => 1,
+	'multiple' => 0,
+	'ui' => 0,
+	'ajax' => 0,
+	'return_format' => 'array',
+	'placeholder' => '',
+);
 $team_member_email = array (
 	'key' => 'field_56cb0269b691e',
 	'label' => 'Email',
@@ -138,6 +165,7 @@ $team_member_featued_profile = array (
 );
 if (isset($options['wp_swift_team_member_cpt_checkbox_acf_field_title'])) {
 	$team_member_fields[] = $team_member_title;
+	$team_member_fields[] = $department;
 }
 if (isset($options['wp_swift_team_member_cpt_checkbox_acf_field_email'])) {
 	$team_member_fields[] = $team_member_email;
@@ -173,7 +201,7 @@ if (count($team_member_fields)>0) {
 		),
 		'menu_order' => 0,
 		'position' => 'normal',
-		'style' => 'default',
+		'style' => 'seamless',
 		'label_placement' => 'top',
 		'instruction_placement' => 'label',
 		'hide_on_screen' => '',

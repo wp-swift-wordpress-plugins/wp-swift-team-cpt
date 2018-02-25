@@ -52,38 +52,56 @@ class Wp_Swift_Team_Cpt_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		add_shortcode( 'team', array($this, 'team_func') );
+		add_shortcode( 'teams', array($this, 'teams_func') );
 	}
 
-	// [team foo="foo-value"]
+	// [team department="investment"]
 	public function team_func( $atts ) {
-	    // $a = shortcode_atts( array(
-	    //     'foo' => 'something',
-	    //     'bar' => 'something else',
-	    // ), $atts );
-	    // return "foo = {$a['foo']}";
-
+	    $a = shortcode_atts( array(
+	        'department' => null,
+	    ), $atts );
         $options = get_option( 'wp_swift_team_member_cpt_settings' );
-        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
         $args = array( 
             'post_type' => 'team_member', 
-            'posts_per_page' => 8, 
-            'paged' => $paged,
+            'posts_per_page' => 20, 
         );
-        global $wp_query;
-        $wp_query = new WP_Query($args);
-        $html='';
+        if (isset($a['department']) && $a['department']) {
+        	$department = $a['department'];
+			$args['meta_key'] = 'department';
+			$args['meta_value']	= $department;           	
+        }
 
-        if ( have_posts() ) : 
+        $html='';
+        $posts = get_posts($args);
+        if( $posts ) : 
 			ob_start();
-			require_once plugin_dir_path( __FILE__ ) . 'partials/wp-swift-team-cpt-public-display.php';
-			$html = ob_get_contents();
+			include plugin_dir_path( __FILE__ ) . 'partials/wp-swift-team-cpt-public-display.php';
+			$html .= ob_get_contents();
 			ob_end_clean();		
-        endif; // End have_posts() check.
-        wp_reset_query();
+        endif;// End $posts check
 
 		return $html;
 	}
 
+
+	// [teams]
+	public function teams_func( $atts ) {
+
+		$departments = array(
+			'investment' => 'Investment Team',
+			'admin' => 'Admin Team',	
+			'external' => 'External Directors',
+		);
+		ob_start();		
+	    $html = '';
+
+	    foreach ($departments as $key => $department) {
+	    	$html .= '<h2>'.$department.'</h2>';
+	    	$html .= "<hr>";
+	    	$html .= $this->team_func( array( "department" => $key ) ); 	
+	    }
+		return $html;
+	}
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
