@@ -70,6 +70,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wp-swift-team-cpt.php';
  * @since    1.0.0
  */
 require plugin_dir_path( __FILE__ ) . 'cpt/_cpt-register.php';
+require plugin_dir_path( __FILE__ ) . 'cpt/_tax-department.php';
 
 /**
  * The posts screen columns.

@@ -48,6 +48,29 @@ $department = array(
 	'return_format' => 'array',
 	'placeholder' => '',
 );
+$tax_department = array(
+	'key' => 'field_5a9d93861a475',
+	'label' => 'Department',
+	'name' => 'tax_department',
+	'type' => 'taxonomy',
+	'instructions' => '',
+	'required' => 0,
+	'conditional_logic' => 0,
+	'wrapper' => array(
+		'width' => '',
+		'class' => '',
+		'id' => '',
+	),
+	'taxonomy' => 'department',
+	'field_type' => 'select',
+	'allow_null' => 0,
+	'add_term' => 0,
+	'save_terms' => 1,
+	'load_terms' => 1,
+	// 'return_format' => 'object',
+	'return_format' => 'id',
+	'multiple' => 0,
+);
 $team_member_email = array (
 	'key' => 'field_56cb0269b691e',
 	'label' => 'Email',
@@ -166,6 +189,7 @@ $team_member_featued_profile = array (
 if (isset($options['wp_swift_team_member_cpt_checkbox_acf_field_title'])) {
 	$team_member_fields[] = $team_member_title;
 	$team_member_fields[] = $department;
+	$team_member_fields[] = $tax_department;
 }
 if (isset($options['wp_swift_team_member_cpt_checkbox_acf_field_email'])) {
 	$team_member_fields[] = $team_member_email;
