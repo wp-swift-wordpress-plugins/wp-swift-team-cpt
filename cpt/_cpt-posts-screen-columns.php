@@ -22,10 +22,14 @@ function populate_team_member_columns($column,$post_id){
         } 
     }
     elseif($column == 'department'){
-        if(get_field('department')){
-            $department = get_field('department');
-            echo $department["label"];            
-        } 
+        $terms = wp_get_post_terms( $post_id, $taxonomy='department' );
+        $terms_str = '';
+        if (!is_wp_error($terms) && count($terms)) {
+            foreach ($terms as $key => $term) {
+                $terms_str = $term->name.', ';
+            }
+            echo rtrim($terms_str, ', ');
+        }
     }
 }
 add_action('manage_team_member_posts_custom_column','populate_team_member_columns',10,2);

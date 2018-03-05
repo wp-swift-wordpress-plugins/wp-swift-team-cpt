@@ -14,7 +14,7 @@ function cptui_register_my_taxes_department() {
 	$args = array(
 		"label" => __( "Departments", "wp-swift-tax-department" ),
 		"labels" => $labels,
-		"public" => true,
+		"public" => false,
 		"hierarchical" => false,
 		"label" => "Departments",
 		"show_ui" => true,
