@@ -59,6 +59,7 @@ class Wp_Swift_Team_Cpt_Public {
 	public function team_func( $atts ) {
 	    $a = shortcode_atts( array(
 	        'department' => null,
+	        'layout' => 'rows'
 	    ), $atts );
         $options = get_option( 'wp_swift_team_member_cpt_settings' );
         $args = array( 
@@ -67,15 +68,33 @@ class Wp_Swift_Team_Cpt_Public {
         );
         if (isset($a['department']) && $a['department']) {
         	$department = $a['department'];
-			$args['meta_key'] = 'department';
-			$args['meta_value']	= $department;           	
+ 
+        	$department = get_term_by('slug', $department, 'department');
+        	if (isset($department->term_id)) {
+		        $args["tax_query"] = array(
+			        array(
+			            'taxonomy' => 'department',
+			            'terms' => $department->term_id,
+		        	),
+		        );		        		
+        	}	        	
         }
 
         $html='';
         $posts = get_posts($args);
         if( $posts ) : 
 			ob_start();
-			include plugin_dir_path( __FILE__ ) . 'partials/wp-swift-team-cpt-public-display.php';
+
+			if ($a['layout'] === 'grid') { ?>
+				
+				<div class="grid-layout">
+					<?php include plugin_dir_path( __FILE__ ) . 'partials/wp-swift-team-cpt-public-display-grid.php'; ?>
+				</div>
+				<?php
+			}
+			else {
+				include plugin_dir_path( __FILE__ ) . 'partials/wp-swift-team-cpt-public-display.php';
+			}
 			$html .= ob_get_contents();
 			ob_end_clean();		
         endif;// End $posts check
@@ -91,17 +110,78 @@ class Wp_Swift_Team_Cpt_Public {
 			'investment' => 'Investment Team',
 			'admin' => 'Admin Team',	
 			'external' => 'External Directors',
+			
 		);
-		ob_start();		
-	    $html = '';
+	    $a = shortcode_atts( array(
+	        'tabs' => false
+	    ), $atts );		
 
-	    foreach ($departments as $key => $department) {
-	    	$html .= '<h2>'.$department.'</h2>';
-	    	$html .= "<hr>";
-	    	$html .= $this->team_func( array( "department" => $key ) ); 	
+	    $html = '';
+	    if ($a["tabs"]) {
+	    	$i = 0;
+		    $tabs = '';
+		    $tab_sections = '';
+		    $headers = '';	    	
+		    foreach ($departments as $key => $department) {
+		    	$i++;
+		    	$headers .= '<h2>'.$department.'</h2>';
+		    	$tabs .= $this->tabs($i, $department);
+		    	$team = $this->team_func( array( "department" => $key, "layout" => "grid" ) ); 	
+		    	$tab_sections .= $this->tab_sections($i, $department, $team);
+		    }
+		    $html = $this->wrap_tabs($tabs, $tab_sections);	    	
+	    }
+	    else {
+		    foreach ($departments as $key => $department) {
+		    	$html .= '<h2>'.$department.'</h2>';
+		    	$html .= $this->team_func( array( "department" => $key) ); 	
+		    }   	    	
 	    }
 		return $html;
 	}
+
+	private function wrap_tabs($tabs, $tab_sections) {
+
+		ob_start();
+		?>
+			<div class="wp-swift-tabs">
+				<?php
+					echo $tabs;
+					echo $tab_sections;
+				?>
+			</div>
+		<?php
+		$html = ob_get_contents();
+		ob_end_clean();
+		
+		return $html;		
+	}
+	private function tabs($i, $department) {
+
+		ob_start();
+		?>
+			<input id="tab<?php echo $i ?>" class="tab-input" type="radio" name="tabs"<?php if ($i === 1) echo ' checked'; ?>>
+  			<label for="tab<?php echo $i ?>" class="tab-label"><?php echo $department ?></label>
+		<?php
+		$html = ob_get_contents();
+		ob_end_clean();
+		
+		return $html;		
+	}
+
+	private function tab_sections($i, $department, $team) {
+
+		ob_start();
+		?>
+		   	<section class="tab-section" id="content<?php echo $i ?>">
+		    	<?php echo $team; ?>
+		  	</section> 
+		<?php
+		$html = ob_get_contents();
+		ob_end_clean();
+		
+		return $html;		
+	}	
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
