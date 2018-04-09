@@ -65,6 +65,8 @@ class Wp_Swift_Team_Cpt_Public {
         $args = array( 
             'post_type' => 'team_member', 
             'posts_per_page' => 20, 
+			'orderby' => 'menu_order',
+			'order' => 'ASC',               
         );
         if (isset($a['department']) && $a['department']) {
         	$department = $a['department'];

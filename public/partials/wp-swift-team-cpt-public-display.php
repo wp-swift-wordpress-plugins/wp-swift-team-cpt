@@ -21,7 +21,7 @@ foreach( $posts as $post ): $post_id = $post->ID; $i++; ?>
         <?php endif;
 
 		if ($post->post_content && isset($options['wp_swift_team_member_cpt_checkbox_visibility'])): ?>
-			<h4><a href="<?php get_the_permalink($post_id) ?>"><?php echo $post->post_title ?></a></h4>
+			<h4><a href="<?php echo get_the_permalink($post_id) ?>"><?php echo $post->post_title ?></a></h4>
 		<?php else: ?>
 			<h4><?php echo $post->post_title ?></h4>
 		<?php endif;
